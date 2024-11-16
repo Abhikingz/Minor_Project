@@ -35,7 +35,7 @@ female_df = female_df.apply(pd.to_numeric, errors='coerce')
 male_df = male_df.dropna()
 female_df = female_df.dropna()
 
-# Sort the data by weight (optional step, only for demonstration)
+# Sort the data by weight 
 male_df = male_df.sort_values(by='Weight')
 female_df = female_df.sort_values(by='Weight')
 
@@ -55,7 +55,7 @@ plt.hist(female_df["Weight"], bins=30, color='red', alpha=0.7, edgecolor='black'
 plt.title('Histogram of Female Weights', fontsize=16, fontweight='bold', color='darkred')
 plt.xlabel('Weight (kg)', fontsize=14)
 plt.ylabel('Frequency', fontsize=14)
-plt.xticks(fontsize=8, rotation=90)  # Rotate x-ticks to avoid overlap
+plt.xticks(fontsize=8, rotation=90)
 plt.yticks(fontsize=12)
 plt.grid(axis='y', color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
 
@@ -65,7 +65,7 @@ plt.hist(male_df["Weight"], bins=30, color='blue', alpha=0.7, edgecolor='black')
 plt.title('Histogram of Male Weights', fontsize=16, fontweight='bold', color='darkblue')
 plt.xlabel('Weight (kg)', fontsize=14)
 plt.ylabel('Frequency', fontsize=14)
-plt.xticks(fontsize=8, rotation=90)  # Rotate x-ticks to avoid overlap
+plt.xticks(fontsize=8, rotation=90) 
 plt.yticks(fontsize=12)
 plt.grid(axis='y', color='gray', linestyle='--', linewidth=0.5, alpha=0.7)
 
@@ -129,7 +129,7 @@ def compute_statistics(data):
 female_stats = compute_statistics(female_df["Weight"])
 male_stats = compute_statistics(male_df["Weight"])
 
-# Convert results into DataFrame for better presentation
+# Converting results into DataFrame for better presentation
 stats_data = {
     'Statistic': ['Mean', 'Median', 'Variance', 'Standard Deviation', 'Skewness', 'Kurtosis'],
     'Female Weights': [female_stats['Mean'], female_stats['Median'], female_stats['Variance'],
@@ -158,14 +158,14 @@ print(female_df[['Weight', 'Height', 'BMI']].head())  # Display Weight, Height, 
 
 """# Standardizing the female dataset"""
 
-#Standardize the female dataset (Z-score normalization)
+#Standardize the female dataset
 zfemale = (female_df - female_df.mean()) / female_df.std()
 
-# Display the first 5 rows of the standardized data in a clean, readable format
+# Display the first 5 rows
 print("\nFirst 5 rows of the standardized female data (Z-scores):\n")
 print(zfemale.head())
 
-# Optionally, you can display the standardized data in a more polished format with a brief explanation
+# Display the standardized data in a more polished format with a brief explanation
 print("\nExplanation: The Z-scores have been calculated by subtracting the mean and dividing by the standard deviation.")
 print("This standardization ensures all variables have a mean of 0 and a standard deviation of 1.")
 
@@ -176,12 +176,12 @@ print("\nCreating scatterplot matrix and computing correlations...")
 # Select columns for scatterplot matrix
 selected_cols = ["Weight", "Height", "Waist Circumference", "Hip Circumference", "BMI"]
 
-# Create a more attractive scatterplot matrix with improved styling
+# Create a scatterplot matrix
 sns.set(style="whitegrid")
 scatter_matrix = sns.pairplot(zfemale[selected_cols],
-                              diag_kind="kde",  # Use Kernel Density Estimate for diagonal
+                              diag_kind="kde",
                               plot_kws={'alpha': 0.7},
-                              height=2.5)  # Set the size of each plot
+                              height=2.5)
 scatter_matrix.fig.suptitle("Scatterplot Matrix of Selected Variables", y=1.02, fontsize=16, fontweight='bold')
 plt.show()
 
@@ -225,14 +225,13 @@ print(female_df[['Height', 'Waist Circumference', 'Hip Circumference', 'Waist-to
 print("\nFirst 5 rows of the male dataset with the new ratios:")
 print(male_df[['Height', 'Waist Circumference', 'Hip Circumference', 'Waist-to-Height Ratio', 'Waist-to-Hip Ratio']].head())
 
-# Make the output more presentable (e.g., round the ratios for better readability)
 female_df["Waist-to-Height Ratio"] = female_df["Waist-to-Height Ratio"].round(2)
 female_df["Waist-to-Hip Ratio"] = female_df["Waist-to-Hip Ratio"].round(2)
 
 male_df["Waist-to-Height Ratio"] = male_df["Waist-to-Height Ratio"].round(2)
 male_df["Waist-to-Hip Ratio"] = male_df["Waist-to-Hip Ratio"].round(2)
 
-# Display the first few rows after rounding the ratios for better presentation
+# Display the first few rows after rounding the ratios
 print("\nFirst 5 rows of the female dataset with rounded ratios:")
 print(female_df[['Height', 'Waist Circumference', 'Hip Circumference', 'Waist-to-Height Ratio', 'Waist-to-Hip Ratio']].head())
 
@@ -243,10 +242,10 @@ print(male_df[['Height', 'Waist Circumference', 'Hip Circumference', 'Waist-to-H
 
 # Prepare the data for the box plot
 data = [
-    female_df["Waist-to-Height Ratio"],   # Female Waist-to-Height Ratio
-    male_df["Waist-to-Height Ratio"],     # Male Waist-to-Height Ratio
-    female_df["Waist-to-Hip Ratio"],      # Female Waist-to-Hip Ratio
-    male_df["Waist-to-Hip Ratio"]         # Male Waist-to-Hip Ratio
+    female_df["Waist-to-Height Ratio"], 
+    male_df["Waist-to-Height Ratio"],    
+    female_df["Waist-to-Hip Ratio"],    
+    male_df["Waist-to-Hip Ratio"]      
 ]
 
 # Set the figure size and box plot attributes
@@ -256,11 +255,11 @@ plt.figure(figsize=(10, 6))
 plt.boxplot(data,
             labels=["Female Waist-to-Height", "Male Waist-to-Height",
                     "Female Waist-to-Hip", "Male Waist-to-Hip"],
-            patch_artist=True,  # Fill the boxes with color
-            boxprops=dict(facecolor='lightblue', linewidth=1.5),  # Box color
-            whiskerprops=dict(color='darkblue', linewidth=1.5),   # Whisker color
-            flierprops=dict(marker='o', markerfacecolor='red', markersize=5),  # Outlier styling
-            medianprops=dict(color='black', linewidth=2))  # Median line color
+            patch_artist=True,  
+            boxprops=dict(facecolor='lightblue', linewidth=1.5),
+            whiskerprops=dict(color='darkblue', linewidth=1.5), 
+            flierprops=dict(marker='o', markerfacecolor='red', markersize=5),
+            medianprops=dict(color='black', linewidth=2))  
 
 # Add titles and labels
 plt.title('Comparison of Waist-to-Height and Waist-to-Hip Ratios', fontsize=16, fontweight='bold')
@@ -320,14 +319,14 @@ Summary:
 """# Standardised body measurements for the 5 persons"""
 
 # Get the indices of the 5 lowest and 5 highest BMI values
-lowest_bmi_indices = zfemale["BMI"].argsort()[:5]  # 5 lowest BMI
-highest_bmi_indices = zfemale["BMI"].argsort()[-5:]  # 5 highest BMI
+lowest_bmi_indices = zfemale["BMI"].argsort()[:5]  
+highest_bmi_indices = zfemale["BMI"].argsort()[-5:] 
 
 # Select the corresponding rows from the zfemale DataFrame
 lowest_bmi_data = zfemale.iloc[lowest_bmi_indices]
 highest_bmi_data = zfemale.iloc[highest_bmi_indices]
 
-# Combine the data into one DataFrame for easier display
+# Combine the data into one DataFrame 
 combined_data = pd.concat([lowest_bmi_data, highest_bmi_data])
 
 # Print out the combined data
